@@ -1,0 +1,3 @@
+INSERT INTO tb_consultation (doctor, specialty, date, status) VALUES ('Dr. Arnaldo Silva', 'Cardiologia', '2026-03-10T14:30:00Z', 'Agendada');
+INSERT INTO tb_consultation (doctor, specialty, date, status) VALUES ('Dra. Juliana Costa', 'Clínico Geral', '2026-03-12T09:00:00Z', 'Confirmada');
+INSERT INTO tb_consultation (doctor, specialty, date, status) VALUES ('Dr. Roberto Oliveira', 'Ortopedia', '2026-03-15T16:45:00Z', 'Pendente');
