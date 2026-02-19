@@ -7,7 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_consultation")
-public class consultation {
+public class Consultation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +17,10 @@ public class consultation {
     private Instant date;
     private String status;
 
-    public consultation() {
+    public Consultation() {
     }
 
-    public consultation(Long id, String doctor, String specialty, Instant date, String status) {
+    public Consultation(Long id, String doctor, String specialty, Instant date, String status) {
         this.id = id;
         this.doctor = doctor;
         this.specialty = specialty;
@@ -71,7 +71,7 @@ public class consultation {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        consultation that = (consultation) o;
+        Consultation that = (Consultation) o;
         return Objects.equals(id, that.id);
     }
 
