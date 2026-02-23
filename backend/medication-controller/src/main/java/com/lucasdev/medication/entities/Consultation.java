@@ -17,6 +17,10 @@ public class Consultation {
     private Instant date;
     private String status;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Consultation() {
     }
 

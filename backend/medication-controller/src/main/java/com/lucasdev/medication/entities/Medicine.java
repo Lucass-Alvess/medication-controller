@@ -3,6 +3,8 @@ package com.lucasdev.medication.entities;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,17 +19,26 @@ public class Medicine {
     private Integer frequency;
     private Integer stock;
     private Instant date;
+    private String applicationType;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "medicine")
+    private List<MedicationRecord> records = new ArrayList<>();
 
     public Medicine() {
     }
 
-    public Medicine(Long id, String name, String dosage, Integer frequency, Integer stock, Instant date) {
+    public Medicine(Long id, String name, String dosage, Integer frequency, Integer stock, Instant date, String applicationType) {
         this.id = id;
         this.name = name;
         this.dosage = dosage;
         this.frequency = frequency;
         this.stock = stock;
         this.date = date;
+        this.applicationType = applicationType;
     }
 
     public Long getId() {
@@ -76,6 +87,22 @@ public class Medicine {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    public String getApplicationType() {
+        return applicationType;
+    }
+
+    public void setApplicationType(String applicationType) {
+        this.applicationType = applicationType;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public List<MedicationRecord> getRecords() {
+        return records;
     }
 
     @Override
