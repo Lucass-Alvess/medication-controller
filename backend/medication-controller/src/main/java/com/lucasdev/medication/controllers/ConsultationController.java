@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "consultation")
 public class ConsultationController {
@@ -20,6 +22,12 @@ public class ConsultationController {
     public ResponseEntity<ConsultationDTO> findById(@PathVariable Long id) {
         ConsultationDTO dto = service.findById(id);
         return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ConsultationDTO>> findAll() {
+        List<ConsultationDTO> list = service.findAll();
+        return ResponseEntity.ok(list);
     }
 
 
