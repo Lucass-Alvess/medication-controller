@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.Instant;
 
-public class ConsultatioDTO {
+public class ConsultationDTO {
 
     private Long id;
 
@@ -23,10 +23,10 @@ public class ConsultatioDTO {
     private Instant date;
     private String status;
 
-    public ConsultatioDTO() {
+    public ConsultationDTO() {
     }
 
-    public ConsultatioDTO(Long id, String doctor, String specialty, Instant date, String status) {
+    public ConsultationDTO(Long id, String doctor, String specialty, Instant date, String status) {
         this.id = id;
         this.doctor = doctor;
         this.specialty = specialty;
@@ -34,7 +34,7 @@ public class ConsultatioDTO {
         this.status = status;
     }
 
-    public ConsultatioDTO(Consultation entity) {
+    public ConsultationDTO(Consultation entity) {
         id = entity.getId();
         doctor = entity.getDoctor();
         specialty = entity.getSpecialty();
