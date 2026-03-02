@@ -5,8 +5,6 @@ import com.lucasdev.medication.entities.Consultation;
 import com.lucasdev.medication.repositories.ConsultationRepository;
 import com.lucasdev.medication.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +23,26 @@ public class ConsultationService {
         return new ConsultationDTO(consultation);
     }
 
+    @Transactional(readOnly = true)
    public List<ConsultationDTO> findAll() {
         List<Consultation> result = repository.findAll();
         return result.stream().map(x -> new ConsultationDTO(x)).toList();
+   }
+
+   @Transactional
+   public ConsultationDTO insert(ConsultationDTO dto) {
+        Consultation entity = new Consultation();
+        copyDtoToEntity(dto, entity);
+
+        entity = repository.save(entity);
+        return new ConsultationDTO(entity);
+   }
+
+   public void copyDtoToEntity(ConsultationDTO dto, Consultation entity) {
+        entity.setDoctor(dto.getDoctor());
+        entity.setSpecialty(dto.getSpecialty());
+        entity.setDate(dto.getDate());
+        entity.setStatus(dto.getStatus());
    }
 
 
