@@ -3,10 +3,13 @@ package com.lucasdev.medication.services;
 import com.lucasdev.medication.dto.ConsultationDTO;
 import com.lucasdev.medication.entities.Consultation;
 import com.lucasdev.medication.repositories.ConsultationRepository;
+import com.lucasdev.medication.services.exceptions.DatabaseExeception;
 import com.lucasdev.medication.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -51,12 +54,24 @@ public class ConsultationService {
         }
    }
 
+   @Transactional(propagation = Propagation.SUPPORTS)
+   public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+        try {
+            repository.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DatabaseExeception("Falha de integridade referencial");
+        }
+   }
+
    public void copyDtoToEntity(ConsultationDTO dto, Consultation entity) {
         entity.setDoctor(dto.getDoctor());
         entity.setSpecialty(dto.getSpecialty());
         entity.setDate(dto.getDate());
         entity.setStatus(dto.getStatus());
    }
-
 
 }
