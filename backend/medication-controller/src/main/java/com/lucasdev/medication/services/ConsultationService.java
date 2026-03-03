@@ -4,6 +4,7 @@ import com.lucasdev.medication.dto.ConsultationDTO;
 import com.lucasdev.medication.entities.Consultation;
 import com.lucasdev.medication.repositories.ConsultationRepository;
 import com.lucasdev.medication.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,18 @@ public class ConsultationService {
 
         entity = repository.save(entity);
         return new ConsultationDTO(entity);
+   }
+
+   @Transactional
+   public ConsultationDTO update(Long id, ConsultationDTO dto) {
+        try{
+            Consultation entity = repository.getReferenceById(id);
+            copyDtoToEntity(dto, entity);
+            entity = repository.save(entity);
+            return new ConsultationDTO(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
    }
 
    public void copyDtoToEntity(ConsultationDTO dto, Consultation entity) {

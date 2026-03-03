@@ -38,6 +38,12 @@ public class ConsultationController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ConsultationDTO> update(@PathVariable Long id, @Valid @RequestBody ConsultationDTO dto) {
+        dto = service.update(id, dto);
+        return ResponseEntity.ok(dto);
+    }
+
 
 
 
