@@ -17,18 +17,18 @@ public class MedicationRecord {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "medicine_id")
-    private Medicine medicine;
+    @JoinColumn(name = "medication_id")
+    private Medication medication;
 
     public MedicationRecord() {
     }
 
-    public MedicationRecord(Long id, Instant prescribedSchedule, Instant timeTaken, String status, Medicine medicine) {
+    public MedicationRecord(Long id, Instant prescribedSchedule, Instant timeTaken, String status, Medication medication) {
         this.id = id;
         this.prescribedSchedule = prescribedSchedule;
         this.timeTaken = timeTaken;
         this.status = status;
-        this.medicine = medicine;
+        this.medication = medication;
     }
 
     public Long getId() {
@@ -63,12 +63,12 @@ public class MedicationRecord {
         this.status = status;
     }
 
-    public Medicine getMedicine() {
-        return medicine;
+    public Medication getMedication() {
+        return medication;
     }
 
-    public void setMedicine(Medicine medicine) {
-        this.medicine = medicine;
+    public void setMedication(Medication medication) {
+        this.medication = medication;
     }
 
     @Override

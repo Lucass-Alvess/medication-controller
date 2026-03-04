@@ -26,7 +26,7 @@ public class User {
     private Set<UserAllergy> allergies = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Medicine> medicines = new ArrayList<>();
+    private List<Medication> medicines = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Consultation> consultations = new ArrayList<>();
@@ -131,7 +131,7 @@ public class User {
         return allergies;
     }
 
-    public List<Medicine> getMedicines() {
+    public List<Medication> getMedicines() {
         return medicines;
     }
 

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "tb_medicine")
-public class Medicine {
+public class Medication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,13 +25,13 @@ public class Medicine {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "medicine")
+    @OneToMany(mappedBy = "medication")
     private List<MedicationRecord> records = new ArrayList<>();
 
-    public Medicine() {
+    public Medication() {
     }
 
-    public Medicine(Long id, String name, String dosage, Integer frequency, Integer stock, Instant date, String applicationType) {
+    public Medication(Long id, String name, String dosage, Integer frequency, Integer stock, Instant date, String applicationType) {
         this.id = id;
         this.name = name;
         this.dosage = dosage;
@@ -108,7 +108,7 @@ public class Medicine {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Medicine medicine = (Medicine) o;
+        Medication medicine = (Medication) o;
         return Objects.equals(id, medicine.id);
     }
 
