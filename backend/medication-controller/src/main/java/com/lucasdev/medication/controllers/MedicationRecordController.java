@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/medications/{medicationId}/records")
@@ -27,5 +28,11 @@ public class MedicationRecordController {
                 .buildAndExpand(dto.getId()).toUri();
 
         return ResponseEntity.created(uri).body(dto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MedicationRecordDTO>> findByMedication(@PathVariable Long medicationId) {
+        List<MedicationRecordDTO> list = service.findByMedication(medicationId);
+        return ResponseEntity.ok(list);
     }
 }

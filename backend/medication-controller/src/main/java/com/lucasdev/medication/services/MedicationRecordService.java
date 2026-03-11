@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class MedicationRecordService {
 
@@ -32,6 +34,12 @@ public class MedicationRecordService {
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Medicamento não encontrado com o ID: " + medicationId);
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<MedicationRecordDTO> findByMedication(Long medicationId) {
+        List<MedicationRecord> list = recordRepository.findByMedicationId(medicationId);
+        return list.stream().map(MedicationRecordDTO::new).toList();
     }
 
     private void copyDtoToEntity(MedicationRecordDTO dto, MedicationRecord entity) {
