@@ -1,0 +1,31 @@
+package com.lucasdev.medication.controllers;
+
+import com.lucasdev.medication.dto.MedicationRecordDTO;
+import com.lucasdev.medication.services.MedicationRecordService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+
+@RestController
+@RequestMapping(value = "/medications/{medicationId}/records")
+public class MedicationRecordController {
+
+    @Autowired
+    private MedicationRecordService service;
+
+    @PostMapping
+    public ResponseEntity<MedicationRecordDTO> insert(
+            @PathVariable Long medicationId,
+            @Valid @RequestBody MedicationRecordDTO dto) {
+
+        dto = service.insert(medicationId, dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(dto);
+    }
+}
