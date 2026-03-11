@@ -1,8 +1,7 @@
 package com.lucasdev.medication.services;
 
-import com.lucasdev.medication.dto.ConsultationDTO;
 import com.lucasdev.medication.dto.MedicationDTO;
-import com.lucasdev.medication.entities.Consultation;
+import com.lucasdev.medication.dto.MedicationMinDTO;
 import com.lucasdev.medication.entities.Medication;
 import com.lucasdev.medication.repositories.MedicationRecordRepository;
 import com.lucasdev.medication.repositories.MedicationRepository;
@@ -11,6 +10,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class MedicineService {
@@ -28,6 +29,11 @@ public class MedicineService {
         return new MedicationDTO(entity);
     }
 
+    @Transactional(readOnly = true)
+    public List<MedicationMinDTO> findAll() {
+        List<Medication> result = medicationRepository.findAll();
+        return result.stream().map(MedicationMinDTO::new).toList();
+    }
     @Transactional
     public MedicationDTO insert(MedicationDTO dto) {
         Medication entity = new Medication();
