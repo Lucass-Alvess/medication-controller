@@ -30,4 +30,10 @@ public class MedicineController {
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<MedicationDTO> update(@PathVariable Long id, @Valid @RequestBody MedicationDTO dto) {
+        dto = service.update(id, dto);
+        return ResponseEntity.ok(dto);
+    }
 }
