@@ -3,6 +3,7 @@ package com.lucasdev.medication.dto;
 import com.lucasdev.medication.entities.MedicationRecord;
 import com.lucasdev.medication.entities.Medication;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.Instant;
@@ -17,10 +18,10 @@ public class MedicationDTO {
     private String name;
     @NotBlank(message = "Campo requerido")
     private String dosage;
-    @NotBlank(message = "Campo requerido")
+    @NotNull(message = "Campo requerido")
     private Integer frequency;
     private Integer stock;
-    @NotBlank(message = "Campo requerido")
+    @NotNull(message = "Campo requerido")
     private Instant date;
     @NotBlank(message = "Campo requerido")
     private String applicationType;
@@ -44,7 +45,7 @@ public class MedicationDTO {
         id = entity.getId();
         name = entity.getName();
         dosage = entity.getDosage();
-        frequency = getFrequency();
+        frequency = entity.getFrequency();
         stock = entity.getStock();
         date = entity.getDate();
         applicationType = entity.getApplicationType();

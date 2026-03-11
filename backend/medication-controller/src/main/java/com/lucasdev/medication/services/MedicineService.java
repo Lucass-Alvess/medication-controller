@@ -1,9 +1,7 @@
 package com.lucasdev.medication.services;
 
 import com.lucasdev.medication.dto.MedicationDTO;
-import com.lucasdev.medication.dto.MedicationRecordDTO;
 import com.lucasdev.medication.entities.Medication;
-import com.lucasdev.medication.entities.MedicationRecord;
 import com.lucasdev.medication.repositories.MedicationRecordRepository;
 import com.lucasdev.medication.repositories.MedicationRepository;
 import com.lucasdev.medication.services.exceptions.ResourceNotFoundException;
@@ -28,14 +26,20 @@ public class MedicineService {
     }
 
     @Transactional
-    public MedicationRecordDTO insert(Long medicationId, MedicationRecordDTO dto) {
-        MedicationRecord entity = new MedicationRecord();
+    public MedicationDTO insert(MedicationDTO dto) {
+        Medication entity = new Medication();
+        copyDtoToEntity(dto, entity);
+        entity = medicationRepository.save(entity);
+        return new MedicationDTO(entity);
+    }
 
-        Medication medication = medicationRepository.getReferenceById(medicationId);
-        entity.setMedication(medication);
-
-        entity = recordRepository.save(entity);
-        return new MedicationRecordDTO(entity);
+    private void copyDtoToEntity(MedicationDTO dto, Medication entity) {
+        entity.setName(dto.getName());
+        entity.setDosage(dto.getDosage());
+        entity.setFrequency(dto.getFrequency());
+        entity.setStock(dto.getStock());
+        entity.setDate(dto.getDate());
+        entity.setApplicationType(dto.getApplicationType());
     }
 
 
