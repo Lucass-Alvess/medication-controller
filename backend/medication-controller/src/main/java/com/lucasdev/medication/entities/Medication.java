@@ -25,7 +25,7 @@ public class Medication {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "medication")
+    @OneToMany(mappedBy = "medication", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MedicationRecord> records = new ArrayList<>();
 
     public Medication() {

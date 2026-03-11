@@ -5,10 +5,13 @@ import com.lucasdev.medication.dto.MedicationMinDTO;
 import com.lucasdev.medication.entities.Medication;
 import com.lucasdev.medication.repositories.MedicationRecordRepository;
 import com.lucasdev.medication.repositories.MedicationRepository;
+import com.lucasdev.medication.services.exceptions.DatabaseExeception;
 import com.lucasdev.medication.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -51,6 +54,19 @@ public class MedicineService {
             return new MedicationDTO(entity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void delete(Long id) {
+        if (!medicationRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+        try {
+            medicationRepository.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DatabaseExeception("Falha de integridade referencial");
         }
     }
 
