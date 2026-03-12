@@ -56,6 +56,15 @@ public class MedicationRecordService {
         }
     }
 
+    @Transactional
+    public void delete(Long id) {
+        if (!recordRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Registro não encontrado com o ID: " + id);
+        }
+
+        recordRepository.deleteById(id);
+    }
+
     private void copyDtoToEntity(MedicationRecordDTO dto, MedicationRecord entity) {
         entity.setPrescribedSchedule(dto.getPrescribedSchedule());
         entity.setTimeTaken(dto.getTimeTaken());

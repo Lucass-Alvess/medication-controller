@@ -47,4 +47,13 @@ public class MedicationRecordController {
         return ResponseEntity.ok(dto);
     }
 
+    @DeleteMapping(value = "/{recordId}")
+    public ResponseEntity<Void> delete(
+            @PathVariable Long medicationId,
+            @PathVariable Long recordId) {
+
+        service.delete(recordId);
+        return ResponseEntity.noContent().build();
+    }
+
 }
