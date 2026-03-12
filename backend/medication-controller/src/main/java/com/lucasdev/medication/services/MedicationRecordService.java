@@ -31,6 +31,7 @@ public class MedicationRecordService {
             copyDtoToEntity(dto, entity);
             entity = recordRepository.save(entity);
             return new MedicationRecordDTO(entity);
+
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Medicamento não encontrado com o ID: " + medicationId);
         }
@@ -40,6 +41,19 @@ public class MedicationRecordService {
     public List<MedicationRecordDTO> findByMedication(Long medicationId) {
         List<MedicationRecord> list = recordRepository.findByMedicationId(medicationId);
         return list.stream().map(MedicationRecordDTO::new).toList();
+    }
+
+    @Transactional
+    public MedicationRecordDTO update(Long id, MedicationRecordDTO dto) {
+        try {
+            MedicationRecord entity = recordRepository.getReferenceById(id);
+            copyDtoToEntity(dto, entity);
+            entity = recordRepository.save(entity);
+            return new MedicationRecordDTO(entity);
+
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Registo não encontrado com o ID: " + id);
+        }
     }
 
     private void copyDtoToEntity(MedicationRecordDTO dto, MedicationRecord entity) {

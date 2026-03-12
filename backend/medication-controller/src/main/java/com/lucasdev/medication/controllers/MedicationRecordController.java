@@ -1,6 +1,7 @@
 package com.lucasdev.medication.controllers;
 
 import com.lucasdev.medication.dto.MedicationRecordDTO;
+import com.lucasdev.medication.entities.MedicationRecord;
 import com.lucasdev.medication.services.MedicationRecordService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,4 +36,15 @@ public class MedicationRecordController {
         List<MedicationRecordDTO> list = service.findByMedication(medicationId);
         return ResponseEntity.ok(list);
     }
+
+    @PutMapping(value = "/{recordId}")
+    public ResponseEntity<MedicationRecordDTO> update(
+            @PathVariable Long medicationId,
+            @PathVariable Long recordId,
+            @Valid @RequestBody MedicationRecordDTO dto) {
+
+        dto = service.update(recordId, dto);
+        return ResponseEntity.ok(dto);
+    }
+
 }
